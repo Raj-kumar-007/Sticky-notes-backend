@@ -1,4 +1,4 @@
-package com.sticky_notes.config;
+package com.stciky.notes.config;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 

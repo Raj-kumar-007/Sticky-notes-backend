@@ -1,4 +1,4 @@
-package com.sticky_notes.api.v1.web;
+package com.stciky.notes.api.v1.web;
 
 import com.sticky_notes.core.services.NotesService;
 import lombok.AllArgsConstructor;

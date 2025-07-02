@@ -1,4 +1,4 @@
-package com.sticky_notes.core.services;
+package com.stciky.notes.core.services;
 
 import org.springframework.stereotype.Service;
 
