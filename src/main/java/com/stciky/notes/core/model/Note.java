@@ -5,10 +5,11 @@ import lombok.Data;
 
 import java.util.UUID;
 
-@Data
 @AllArgsConstructor
-public class Notes {
-    UUID id;
-    UUID userId;
-    Note note;
+@Data
+public class Note {
+    private UUID id;
+    private String note;
+    private Colors color;
+    private Positions position;
 }

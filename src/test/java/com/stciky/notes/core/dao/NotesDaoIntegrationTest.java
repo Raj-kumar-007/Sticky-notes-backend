@@ -17,7 +17,8 @@ class NotesDaoIntegrationTest extends BaseIntegrationTest {
     @Test
     void getByNoteId() {
         var noteId = fromString("83b7b7c9-a5ed-4f7a-b044-ce79d3dc748a");
-        assertThat(dao.getByNoteId(noteId))
+        var userId = fromString("6ef449b3-6c57-4863-8185-6448e769330b");
+        assertThat(dao.getByNoteId(noteId, userId))
                 .extracting(Notes::getUserId)
                 .isEqualTo(fromString("6ef449b3-6c57-4863-8185-6448e769330b"));
     }

@@ -4,12 +4,14 @@ import com.stciky.notes.api.v1.web.model.ApiNotes;
 import com.stciky.notes.core.component.NotesMapper;
 import com.stciky.notes.core.services.NotesService;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/notes")
@@ -19,13 +21,21 @@ public class NotesController {
 
     private final NotesService notesService;
     private final NotesMapper notesMapper;
-                       
-    public void getAll(UUID userId) {
 
+    @GetMapping("/{userId}")
+    public List<ApiNotes> getAll(@PathVariable UUID userId) {
+        return notesService.getAll(userId)
+                .stream().map(notesMapper::mapToApiNotes)
+                .collect(Collectors.toList());
     }
 
-    public void deleteNotes(UUID id, UUID userId) {
+    public ResponseEntity<ApiNotes> getNotes(@PathVariable UUID noteId, @PathVariable UUID userId) {
+        return ResponseEntity.ok(notesService.getNoteById(noteId, userId));
+    }
 
+    @DeleteMapping("delete/{id}/{userId}")
+    public void deleteNotes(@PathVariable UUID id, @PathVariable UUID userId) {
+        notesService.delete(id, userId);
     }
 
     @PostMapping
@@ -33,7 +43,8 @@ public class NotesController {
         notesService.save(notesMapper.mapToNotes(apiNotes));
     }
 
-    public void updateNotes(UUID id, UUID userId) {
+    @PutMapping("/update/{id}/{userId}")
+    public void updateNotes(@PathVariable UUID id, @PathVariable UUID userId) {
 
     }
 
