@@ -1,4 +1,6 @@
 package com.stciky.notes.api.v1.web.model;
 
-public record Notes() {
+import java.util.UUID;
+
+public record ApiNotes(UUID id, UUID userId, String notes) {
 }

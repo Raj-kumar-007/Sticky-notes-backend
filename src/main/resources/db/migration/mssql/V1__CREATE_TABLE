@@ -1,0 +1,6 @@
+CREATE TABLE Notes
+(
+    Id          UNIQUIDENTIFIER     DEFAULT UUID()      NOT NULL PRIMARY KEY,
+    UserId      UNIQUIDENTIFIER     DEFAULT UUID()      NOT NULL            ,
+    Note        varchar(max)        DEFAULT ''                              ,
+);
