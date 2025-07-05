@@ -23,4 +23,9 @@ public class NotesMapper {
     public Note mapContentToNotes(String content){
         return mapper.readValue(content, Note.class);
     }
+
+    @SneakyThrows
+    public String mapContentToJson(Note content){
+        return mapper.writeValueAsString(content);
+    }
 }

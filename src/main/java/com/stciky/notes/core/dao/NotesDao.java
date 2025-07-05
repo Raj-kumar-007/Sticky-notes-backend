@@ -34,16 +34,6 @@ public class NotesDao {
         return jdbc.queryForObject(sql, params, (rs, rowNum) -> notes(rs));
     }
 
-
-    public void save(Notes notes) {
-        var sql = "insert into notes (Id, UserId, Note) values (:id, :userId, :note)";
-        var params = new LinkedHashMap<String, Object>();
-        params.put("id", notes.getId());
-        params.put("userId", notes.getUserId());
-        params.put("note", notes.getNote());
-        jdbc.update(sql, params);
-    }
-
     private Notes notes(ResultSet rs) throws SQLException {
         return new Notes(rs.getObject("Id", UUID.class),
                 rs.getObject("UserId", UUID.class),
@@ -55,6 +45,15 @@ public class NotesDao {
         var params = new LinkedHashMap<String, Object>();
         params.put("id", id);
         params.put("userId", userId);
+        jdbc.update(sql, params);
+    }
+
+    public void save(Notes notes) {
+        var sql = "insert into notes (Id, UserId, Note) values (:id, :userId, :note)";
+        var params = new LinkedHashMap<String, Object>();
+        params.put("id", notes.getId());
+        params.put("userId", notes.getUserId());
+        params.put("note", notesMapper.mapContentToJson(notes.getNote()));
         jdbc.update(sql, params);
     }
 }

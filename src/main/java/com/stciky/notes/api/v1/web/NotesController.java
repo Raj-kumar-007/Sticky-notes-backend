@@ -4,8 +4,8 @@ import com.stciky.notes.api.v1.web.model.ApiNotes;
 import com.stciky.notes.core.component.NotesMapper;
 import com.stciky.notes.core.services.NotesService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,7 @@ public class NotesController {
     private final NotesMapper notesMapper;
 
     @GetMapping("/{userId}")
-    public List<ApiNotes> getAll(@PathVariable UUID userId) {
+    public List<ApiNotes> getAllByUserId(@PathVariable("userId") UUID userId) {
         return notesService.getAll(userId)
                 .stream().map(notesMapper::mapToApiNotes)
                 .collect(Collectors.toList());
@@ -38,9 +38,10 @@ public class NotesController {
         notesService.delete(id, userId);
     }
 
-    @PostMapping
-    public void save(ApiNotes apiNotes) {
+    @PostMapping()
+    public ResponseEntity<Object> save(@RequestBody ApiNotes apiNotes) {
         notesService.save(notesMapper.mapToNotes(apiNotes));
+        return  ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/update/{id}/{userId}")
